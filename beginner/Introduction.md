@@ -74,7 +74,7 @@ export GOROOT=/usr/local/go
 - Tiếp đó chúng ta sẽ thiết lập đường dẫn tới project mà chúng ta sẽ sử  dụng để  viết chương trinh go:
 
 ```
-export GOPATH=$HOME/Projects/Proj1
+export GOPATH=$HOME/go/Prj1
 ```
 
 - cuối cùng để  có thể  nhận được thông tin về  thư mục go và sử  dụng trong hệ thống hãy gán lại biến PATH
