@@ -30,15 +30,15 @@ go
 
 Tiếp đó hãy gõ doạn mã sau vào trong file `.go` mà bạn vừa tạo:
 
-```
+```go
 package main 
 
 import (
-	"fmt"
+    "fmt"
 )
 
 func main() {
-	fmt.Println("Hello Go!");
+    fmt.Println("Hello Go!");
 }
 
 ```
