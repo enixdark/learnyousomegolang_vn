@@ -415,6 +415,20 @@ kiểu dữ liệu của một phần tử  là uint8, kích thước của mộ
 
 - Đó đúng có vể  đúng như những gì tôi nói phải không. 
 
+
+### Giá tri mặc định ( Zero Value )
+
+- Trong những ví dụ đâu tiên chúng ta đã thấy việc khai báo dữ liệu mà không kèm với khởi tạo giá trị, tuy nhiên khi thực hiện 
+in ra màn hình chúng ta vẫn thấy chúng có giá trị. Những giá trị như vậy là những giá trị mặc định được tạo ra khi chúng ta khai báo một kiểu dữ liệu xác định mà không xác định giá trị cần tạo.
+
+- các giá trị mặc định của các kiểu được dựa trên sơ đồ  sau:
+
+```go
+numeric: 0
+bool: false
+string: ""
+```
+
 ### Chuyển kiểu ( Type Conversion )
 
 - Vậy là các kiẻu dữ liệu cơ bản chúng ta đã tìm hiểu rồi, tuy vậy có một điều mà chúng ta chưa để  cập tới đó là giả sử  như bạn đa có một biến với kiểu dữ liệu int32, và bạn sử  dụng biến này để  nhận kết quả của một phép chia, nhưng giá trị của bạn tạị một thời điểm lại là kiểu số  thực, có điều như bạn biết Go là ngôn ngữ lập trình yêu cầu khắt khe về  mặt kiểu dữ liệu tĩnh ( strong static type ) do đó nó không thể  tự động chuyển kiểu đc vậy thì phải làm như thé nào trong trường hợp đó. 
