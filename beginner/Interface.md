@@ -60,7 +60,7 @@ Anh Quan đang chạy
 Anh Quan đang đứng yên
 ```
 
-- Oh chắc bạn sẽ ngạc nhiên và hỏi tại sao lại như vậy đúng không ? Đừng vội tôi sẽ giải thích. Ở đoạn ví dụ này chúng ta viết một chương trình đơn giản mô phỏng hành vi của một người gồm có dừng, đi bộ và chạy. Trước tiên chúng ta sẽ khai báo một kiểu cấu trúc có tên là People chứa thông tin tên và tuổi của một người, tiếp đó lúc này chúng ta sẽ dịnh nghĩa một interface gọi là Action, interface này sẽ mô tả các hành vi của người thông qua các phương thức. Như bạn thấy chúng ta không có bất kỳ đoạn logic nào bên trong cả, đơn giản chỉ là khai báo thôi. Tiếp theo dựa vào các phương thức có trong interface chúng ta thực hiện các phương thức ứng với kiểu cấu trúc People. Trong hàm `main` lúc này bạn có để  ý rằng chúng ta có thể  gán một kiểu thuộc `interface` tới 1 biến có kiểu  cấu trúc không. Nó không hề  có lỗi nào cả mặc dù hai kiểu này hoàn toàn khác nhau, đúng nó không hề  lỗi bởi vì khi bạn khai báo thực hiện hết các phương thức đã được định nghĩa trong interface thì bạn hoàn toàn có thể  gán với một kiểu interface tới một kiểu cấu trúc như một kiểu đại diện. Sau đó khi gọi các phương trong interace Go sẽ tìm kiếm và gọi tới các phương thức trong cấu trúc.
+- Oh chắc bạn sẽ ngạc nhiên và hỏi tại sao lại như vậy đúng không ? Đừng vội tôi sẽ giải thích. Ở đoạn ví dụ này chúng ta viết một chương trình đơn giản mô phỏng hành vi của một người gồm có dừng, đi bộ và chạy. Trước tiên chúng ta sẽ khai báo một kiểu cấu trúc có tên là People chứa thông tin tên và tuổi của một người, tiếp đó lúc này chúng ta sẽ dịnh nghĩa một interface gọi là Action, interface này sẽ mô tả các hành vi của người thông qua các phương thức. Như bạn thấy chúng ta không có bất kỳ đoạn logic nào bên trong cả, đơn giản chỉ là khai báo thôi. Tiếp theo dựa vào các phương thức có trong interface chúng ta thực hiện các phương thức ứng với kiểu cấu trúc People. Trong hàm `main` lúc này bạn có để  ý rằng chúng ta có thể  gán một kiểu thuộc `interface` tới 1 biến có kiểu  cấu trúc không. Nó không hề  có lỗi nào cả mặc dù hai kiểu này hoàn toàn khác nhau, đúng nó không hề  lỗi bởi vì khi bạn khai báo thực hiện hết các phương thức đã được định nghĩa trong interface thì bạn hoàn toàn có thể  gán với một kiểu interface tới một kiểu cấu trúc như một kiểu đại diện. Sau đó khi gọi các phương thức trong interace Go sẽ tìm kiếm và gọi tới các phương thức trong cấu trúc.
 
 - Vậy cách làm này có ích gì, nếu nó là một cách đại diện thôi thì thật thừa thãi. Đừng vội hãy nhìn nhận ví dụ sau sẽ hiểu tạo sao lại có interface:
 
@@ -77,6 +77,10 @@ type People struct {
 }
 
 type Cat struct {
+    name string
+}
+
+type Dog struct {
     name string
 }
 
@@ -110,10 +114,23 @@ func (c Cat) stop() {
     fmt.Printf("Con mèo %s đang đứng yên\n", c.name)
 }
 
+func (c* Dog) run() {
+    fmt.Printf("Con chó %s đang đứng yên\n", c.name)
+}
+
+func (c* Dog) walk() {
+    fmt.Printf("Con chó %s đang đi bộ\n", c.name)
+}
+
+func (c* Dog) stop() {
+    fmt.Printf("Con chó %s đang đứng yên\n", c.name)
+}
+
 func main() {
     p := People{ name: "Quan", age: 25 }
     c := Cat{ name: "Meww" }
-    a := []Action{p, c}
+    d := &Dog{ name: "Nuu" }
+    a := []Action{p, c, d}
     for _, d := range a{
         d.walk()
         d.run()
@@ -130,11 +147,24 @@ Anh Quan đang đứng yên
 Con mèo Meww đang đi bộ
 Con mèo Meww đang đứng yên
 Con mèo Meww đang đứng yên
+Con chó Nuu đang đi bộ
+Con chó Nuu đang đứng yên
+Con chó Nuu đang đứng yên
 ```
 
-- Điều đặc biệt của Interface năm ở đây. bạn chi cần khai báo một giao tiếp interface chung và thực hiện các hành vi logic cho cả cấu trúc Cat và People là có thê thông qua interface đó đại diện cho cả hai rồi, thậm chí là cho nhiều cấu trúc hơn nữa.
+- Điều đặc biệt của Interface năm ở đây. bạn chi cần khai báo một giao tiếp interface chung và thực hiện các hành vi logic cho cả cấu trúc Cat và People là có thê thông qua interface đó đại diện cho cả hai rồi, thậm chí là cho nhiều cấu trúc hơn nữa. Ngoài ra có một lưu ý là ứng mỗi phương thức cần định nghĩa trong 
+`Interface`, bạn để  ý rằng chúng ta sẽ khải báo một biến ứng với kiểu cấu trúc dữ liệu, đây sẽ là biến đại diện hay có thể  coi như một thể  hiện của kiểu cấu trúc dữ liệu đó. Về  bản chất chúng không khác gì việc  
+chúng ta khai sử  dụng hàm cùng với tham xác định:
 
-### Tham số  Interface và interface nặc danh
+```go
+func run(p People) {
+    fmt.Printf("Anh %s đang chạy\n", p.name)
+}
+```
+
+- Nhưng cách gọi `a.run()` sẽ trông gọn gàng và quen thuộc với OOP hơn cách gọi `run(a)`. Đồng thời tương tự như tham số  chúng ta có thể  sử  dụng cả con trỏ đối khi chỉ định với kiểu cấu trúc dữ liệu ứng với phương thức cần thực hiện. 
+
+### Tham số  Interface và interface rỗng, interface nặc danh
 
 - Ở đoạn code trên ta thấy được việc dùng interface như một cách định danh chúng cho các kiểu cấu trúc mà có chứa các phường thức của interface rồi. Thêm nữa bản thân interface cũng coi là một kiểu dữ liệu, do đó không có lí do gì mà chúng ta lại không sử  dụng như một tham số  cả. Từ ví dụ trên chúng ta có thể  taí cấu trúc lại như sau:
 
@@ -164,6 +194,48 @@ type InterfaceName interface {}
 - Cú pháp chỉ đơn giản vậy thôi nhưng nó sẽ dùng như thế  nào khi mà không có bất kỳ một phương thức nào để  gọi cho dù với cách này nó có thể  đại diện cho rất nhiều các kiểu dữ liệu. Vậy bạn còn nhớ trong chương cấu trúc chúng ta đã làm quen với một cấu trúc nặc danh ( anonymous struct ) rồi chứ, bởi vì cấu trúc này chỉ được tao tại một thời điểm xác định và không có tên định danh cho nó lên thường không thể  được dùng làm tham số  truyền vào hàm. Nhưng đó chỉ là ở chương trước thôi còn khi bạn đã làm quen với interface, đặc biệt là interface rông thì bạn có thể , để  rõ ràng nhất hãy xem ví dụ sau đây:
 
 ```go
+package main
 
+import (
+	"fmt"
+)
+
+type NoInf interface {}
+
+func test(i NoInf) {
+	fmt.Printf("Type = %T, value = %v\n", i, i)
+}
+
+func main() {  
+    str_ := "Hi"
+    test(str_)
+    int_ := 55
+    test(int_)
+    struct_ := struct {
+        name string,
+    }{
+        name: "Cong Quan"
+    }
+    test(struct_)
+}
 ```
+
+Kết quả:
+
+```go
+Type = string, value = Hi
+Type = int, value = 55
+Type = struct { name string, age int }, value = {Cong Quan, 25}
+```
+
+- Ngạc nhiên chưa, mặc dù như chúng ra biết Go là một ngôn ngữ chặt ché về  mặt cú pháp cũng như khai báo kiểu dư liệu nhưng với việc sử  dụng `Interface` đặc biệt là một `Interface` rỗng, bạn có thể  đại diện cho bất kỳ kiểu dữ liệu nào, thậm chí là những kiểu dữ liệu như cấu trúc nặc danh ( anonymous struct ).
+
+- Lưu ý: trong ví dụ trên chúng ta khai báo một interface rỗng cũng với tên, tuy nhiên bạn không nhất thiết phải định nghĩa như vậy. Tương tự như kiểu cấu trúc `struct` bạn cũng có thể  sử  dụng một `interface` mà không cùng với tên xác định:
+
+```go
+func test(i interface{}) {
+	fmt.Printf("Type = %T, value = %v\n", i, i)
+}
+```
+
 
